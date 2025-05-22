@@ -210,14 +210,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "assert_no_alloc"
-version = "1.1.2"
-dependencies = [
- "backtrace",
- "log",
-]
-
-[[package]]
 name = "async-io"
 version = "2.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2130,6 +2122,8 @@ dependencies = [
 name = "hoonc"
 version = "0.2.0"
 dependencies = [
+ "bincode",
+ "blake3",
  "bytes",
  "clap",
  "dirs",
@@ -2138,8 +2132,10 @@ dependencies = [
  "nockvm",
  "nockvm_macros",
  "tempfile",
+ "thiserror 2.0.12",
  "tokio",
  "tracing",
+ "tracing-subscriber",
  "walkdir",
 ]
 
@@ -2756,6 +2752,7 @@ dependencies = [
  "libp2p-mdns",
  "libp2p-memory-connection-limits",
  "libp2p-metrics",
+ "libp2p-peer-store",
  "libp2p-ping",
  "libp2p-quic",
  "libp2p-request-response",
@@ -2938,6 +2935,16 @@ dependencies = [
  "pin-project",
  "prometheus-client",
  "web-time",
+]
+
+[[package]]
+name = "libp2p-peer-store"
+version = "0.1.0"
+source = "git+https://github.com/libp2p/rust-libp2p.git?rev=da0017ee887a868e231ed78c7de892779c17800d#da0017ee887a868e231ed78c7de892779c17800d"
+dependencies = [
+ "libp2p-core",
+ "libp2p-swarm",
+ "lru",
 ]
 
 [[package]]
@@ -3451,7 +3458,6 @@ name = "nockapp"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "assert_no_alloc",
  "async-trait",
  "axum 0.8.4",
  "bincode",
@@ -3475,6 +3481,8 @@ dependencies = [
  "opentelemetry_sdk",
  "rand 0.8.5",
  "serde",
+ "signal-hook",
+ "signal-hook-tokio",
  "tempfile",
  "termimad",
  "thiserror 2.0.12",
@@ -3496,6 +3504,7 @@ dependencies = [
  "bs58",
  "clap",
  "equix",
+ "futures",
  "hoonc",
  "kernels",
  "libp2p",
@@ -3580,7 +3589,6 @@ dependencies = [
 name = "nockvm"
 version = "0.1.0"
 dependencies = [
- "assert_no_alloc",
  "autotools",
  "bitvec",
  "cc",
@@ -3611,7 +3619,6 @@ version = "0.1.0"
 dependencies = [
  "aes",
  "aes-siv",
- "assert_no_alloc",
  "curve25519-dalek",
  "ed25519-dalek",
  "ibig",
@@ -4879,6 +4886,18 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9203b8055f63a2a00e2f593bb0510367fe707d7ff1e5c872de2f537b339e5410"
 dependencies = [
  "libc",
+]
+
+[[package]]
+name = "signal-hook-tokio"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "213241f76fb1e37e27de3b6aa1b068a2c333233b59cca6634f634b80a27ecf1e"
+dependencies = [
+ "futures-core",
+ "libc",
+ "signal-hook",
+ "tokio",
 ]
 
 [[package]]
