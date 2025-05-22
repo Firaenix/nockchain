@@ -51,6 +51,11 @@ jobs:
         run: |
           rustup target add aarch64-apple-darwin
 
+      - name: Setup cross-compilation for ARM64 (macOS)
+        if: matrix.os == 'macos-latest' && matrix.arch == 'arm64'
+        run: |
+          rustup target add aarch64-apple-darwin
+
       - name: Create .env file
         run: cp .env_example .env
 
@@ -60,7 +65,8 @@ jobs:
       - name: Build binaries
         run: |
           if [ "${{ matrix.os }}" == "macos-latest" ] && [ "${{ matrix.arch }}" == "arm64" ]; then
-            cargo build --release --target aarch64-apple-darwin
+            # For macOS ARM64, we need a special build approach
+            CARGO_BUILD_TARGET=aarch64-apple-darwin make build
           else
             make build
           fi
