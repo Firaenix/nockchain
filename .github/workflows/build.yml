@@ -43,9 +43,8 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: stable
-          override: true
           target: ${{ matrix.arch == 'amd64' && matrix.rust_target_amd64 || matrix.rust_target_arm64 }}
+          # The toolchain is defined in rust-toolchain.toml
 
       - name: Setup cross-compilation for ARM64 (macOS)
         if: matrix.os == 'macos-latest' && matrix.arch == 'arm64'
