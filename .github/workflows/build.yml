@@ -27,6 +27,7 @@ jobs:
           # Exclude arm64 build on Ubuntu runner as it requires more setup
           - os: ubuntu-latest
             arch: arm64
+      fail-fast: false
 
     steps:
       - name: Checkout code
@@ -45,11 +46,6 @@ jobs:
           toolchain: stable
           override: true
           target: ${{ matrix.arch == 'amd64' && matrix.rust_target_amd64 || matrix.rust_target_arm64 }}
-
-      - name: Setup cross-compilation for ARM64 (macOS)
-        if: matrix.os == 'macos-latest' && matrix.arch == 'arm64'
-        run: |
-          rustup target add aarch64-apple-darwin
 
       - name: Setup cross-compilation for ARM64 (macOS)
         if: matrix.os == 'macos-latest' && matrix.arch == 'arm64'
@@ -91,7 +87,7 @@ jobs:
           cd ..
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.artifact_prefix }}-${{ matrix.arch }}
           path: ${{ matrix.artifact_prefix }}-${{ matrix.arch }}.tar.gz
@@ -107,7 +103,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download all artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           path: artifacts
 
